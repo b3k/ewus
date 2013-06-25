@@ -1,0 +1,23 @@
+{
+    "name": "b3k/ewus",
+    "description": "PHP library implementing eWUS functionality from NFZ",
+    "keywords": ["ewus", "php", "nfz"],
+    "homepage": "http://github.com/b3k/ewus",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bartosz Pietrzak",
+            "email": "b3k@b3k.pl",
+            "homepage": "http://b3k.pl"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+    },
+    "require-dev": {},
+    "suggest": {},
+    "autoload": {
+        "psr-0": {"Ewus": "src/"}
+    }
+}

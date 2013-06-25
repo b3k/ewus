@@ -1,0 +1,2345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="ServiceBrokerCwuAuth" soapui-version="4.0.1" resourceRoot="" abortOnError="false" runType="SEQUENTIAL" activeEnvironment="Default" xmlns:con="http://eviware.com/soapui/config">
+	<con:settings/>
+	<con:interface name="ServiceBrokerSoapBinding" bindingName="{http://xml.kamsoft.pl/ws/broker}ServiceBrokerSoapBinding" soapVersion="1_1" definition="http://nfz.kamsoft.pl/ws-broker-server/services/ServiceBroker?wsdl" xsi:type="con:WsdlInterface" wsaVersion="NONE" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<con:settings/>
+		<con:endpoints>
+			<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+			
+		</con:endpoints>
+		<con:operation isOneWay="false" action="executeService" name="executeService" bindingOperationName="executeService" inputName="executeServiceRequest" outputName="executeServiceResponse" receivesAttachments="false" sendsAttachments="false" type="Request-Response" anonymous="optional">
+			<con:settings/>
+			<con:call name="checkCWU">
+				<con:settings>
+					<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+				</con:settings>
+				<con:encoding>UTF-8</con:encoding>
+				<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+				<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+      <com:session id="D640E548C7C7E2DBF608197AEC8F34B1" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="BSTlqN3nAPiyvpV+O7B_Es" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>    
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010185481</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+				<con:credentials>
+					<con:authType>Global HTTP Settings</con:authType>
+				</con:credentials>
+				<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+				<con:jmsPropertyConfig/>
+				<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+				<con:wsrmConfig version="1.2"/>
+			</con:call>
+		</con:operation>
+		<con:definitionCache rootPart="http://nfz.kamsoft.pl/ws-broker-server/services/ServiceBroker?wsdl" type="TEXT">
+			<con:part>
+				<con:url>http://nfz.kamsoft.pl/ws-broker-server/services/ServiceBroker?wsdl
+				</con:url>
+				<con:content><![CDATA[<wsdl:definitions targetNamespace="http://xml.kamsoft.pl/ws/broker" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:ns1="http://www.w3.org/2005/05/xmlmime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wscommon="http://xml.kamsoft.pl/ws/common" xmlns:ns="http://wsdl.kamsoft.pl/common" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsbroker="http://xml.kamsoft.pl/ws/broker">
+  <wsdl:import namespace="http://wsdl.kamsoft.pl/common" location="ServiceBroker?wsdl=ws_common.wsdl"></wsdl:import>
+  <wsdl:types>
+    <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xml.kamsoft.pl/ws/broker" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+      <import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="ServiceBroker?xsd=xmime.xsd"/>
+      <import namespace="http://xml.kamsoft.pl/ws/common" schemaLocation="ServiceBroker?xsd=ws-common.xsd"/>
+      <complexType name="ServiceResponse">
+        <complexContent>
+          <extension base="wsbroker:Service"/>
+        </complexContent>
+      </complexType>
+      <complexType name="ServiceRequest">
+        <complexContent>
+          <extension base="wsbroker:Service"/>
+        </complexContent>
+      </complexType>
+      <complexType name="Service">
+        <sequence>
+          <element ref="wscommon:location"/>
+          <element name="date" type="dateTime"/>
+          <element minOccurs="0" name="params" type="wsbroker:ArrayOfParam"/>
+          <element name="payload" type="wsbroker:Payload"/>
+        </sequence>
+      </complexType>
+      <complexType name="Payload">
+        <sequence>
+          <element minOccurs="0" name="textload">
+            <complexType>
+              <sequence>
+                <any/>
+              </sequence>
+            </complexType>
+          </element>
+          <element minOccurs="0" name="streamload">
+            <complexType>
+              <sequence>
+                <element name="stream" type="xmime:base64Binary"/>
+              </sequence>
+              <attribute name="name" type="string" use="required"/>
+            </complexType>
+          </element>
+        </sequence>
+      </complexType>
+      <complexType name="Param">
+        <sequence>
+          <element name="name" type="xsd:string"/>
+          <element name="value" type="xsd:string"/>
+        </sequence>
+      </complexType>
+      <complexType name="ArrayOfParam">
+        <sequence>
+          <element maxOccurs="unbounded" name="item" type="wsbroker:Param"/>
+        </sequence>
+      </complexType>
+      <element name="executeService" type="wsbroker:ServiceRequest"/>
+      <element name="executeServiceReturn" type="wsbroker:ServiceResponse"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="executeServiceRequestMsg">
+    <wsdl:part name="request" element="wsbroker:executeService"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="executeServiceResponseMsg">
+    <wsdl:part name="response" element="wsbroker:executeServiceReturn"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ServiceBroker">
+    <wsdl:operation name="executeService">
+      <wsdl:input name="executeServiceRequest" message="wsbroker:executeServiceRequestMsg"></wsdl:input>
+      <wsdl:output name="executeServiceResponse" message="wsbroker:executeServiceResponseMsg"></wsdl:output>
+      <wsdl:fault name="serviceException" message="ns:serviceExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="inputException" message="ns:inputExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="serverException" message="ns:serverExceptionMsg"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceBrokerSoapBinding" type="wsbroker:ServiceBroker">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="executeService">
+      <wsdlsoap:operation soapAction="executeService" style="document"/>
+      <wsdl:input name="executeServiceRequest">
+        <wsdlsoap:body parts="request" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="executeServiceResponse">
+        <wsdlsoap:body parts="response" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="serviceException">
+        <wsdlsoap:fault name="serviceException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="inputException">
+        <wsdlsoap:fault name="inputException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="serverException">
+        <wsdlsoap:fault name="serverException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServiceBroker">
+    <wsdl:port name="ServiceBroker" binding="wsbroker:ServiceBrokerSoapBinding">
+      <wsdlsoap:address location="http://10.10.0.61:8080/ws-broker-server/services/ServiceBroker"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content>
+				<con:type>http://schemas.xmlsoap.org/wsdl/</con:type>
+			</con:part>
+			<con:part>
+				<con:url>http://nfz.kamsoft.pl/ws-broker-server/services/ServiceBroker?xsd=ws-common.xsd
+				</con:url>
+				<con:content><![CDATA[<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xml.kamsoft.pl/ws/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wscommon="http://xml.kamsoft.pl/ws/common">
+  <xs:complexType name="AuthorizationException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AuthenticationException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ServiceException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PassExpiredException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AuthTokenException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ServerException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InputException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SessionException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfMessage">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Message" type="string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BaseException">
+    <xs:sequence>
+      <xs:element ref="wscommon:location"/>
+      <xs:element name="faultcode" type="string"/>
+      <xs:element name="faultstring" type="string"/>
+      <xs:element name="faultactor" type="string"/>
+      <xs:element minOccurs="0" name="messages" type="wscommon:ArrayOfMessage"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceLocation">
+    <xs:sequence>
+      <xs:element name="namespace" type="string"/>
+      <xs:element name="localname" type="string"/>
+      <xs:element name="version" type="string"/>
+      <xs:element default="0" minOccurs="0" name="id" type="string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="sessionError" type="wscommon:SessionException"/>
+  <xs:element name="passExpiredError" type="wscommon:PassExpiredException"/>
+  <xs:element name="authTokenError" type="wscommon:AuthTokenException"/>
+  <xs:element name="authenticationError" type="wscommon:AuthenticationException"/>
+  <xs:element name="authorizationError" type="wscommon:AuthorizationException"/>
+  <xs:element name="inputError" type="wscommon:InputException"/>
+  <xs:element name="serviceError" type="wscommon:ServiceException"/>
+  <xs:element name="serverError" type="wscommon:ServerException"/>
+  <xs:element name="location" type="wscommon:ServiceLocation"/>
+  <xs:element name="authToken">
+    <xs:complexType>
+      <xs:attribute name="id" type="string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="session">
+    <xs:complexType>
+      <xs:attribute name="id" type="string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content>
+				<con:type>http://www.w3.org/2001/XMLSchema</con:type>
+			</con:part>
+			<con:part>
+				<con:url>http://nfz.kamsoft.pl/ws-broker-server/services/ServiceBroker?wsdl=ws_common.wsdl
+				</con:url>
+				<con:content><![CDATA[<wsdl:definitions targetNamespace="http://wsdl.kamsoft.pl/common" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wscommon="http://xml.kamsoft.pl/ws/common" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://wsdl.kamsoft.pl/common" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://schemas.xmlsoap.org/soap/encoding/">
+      <import namespace="http://xml.kamsoft.pl/ws/common" schemaLocation="ServiceBroker?xsd=ws-common.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="sessionExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:sessionError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="inputExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:inputError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serverExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:serverError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authTokenExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:authTokenError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authorizationExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:authorizationError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:serviceError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authenticationExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:authenticationError"></wsdl:part>
+  </wsdl:message>
+</wsdl:definitions>]]></con:content>
+				<con:type>http://schemas.xmlsoap.org/wsdl/</con:type>
+			</con:part>
+			<con:part>
+				<con:url>http://nfz.kamsoft.pl/ws-broker-server/services/ServiceBroker?xsd=xmime.xsd
+				</con:url>
+				<con:content><![CDATA[<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.w3.org/2005/05/xmlmime" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+  <xs:attribute name="contentType">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="3"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="expectedContentTypes" type="xs:string"/>
+  <xs:complexType name="base64Binary">
+    <xs:simpleContent>
+      <xs:extension base="xs:base64Binary">
+        <xs:attribute ref="xmime:contentType"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="hexBinary">
+    <xs:simpleContent>
+      <xs:extension base="xs:hexBinary">
+        <xs:attribute ref="xmime:contentType"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>]]></con:content>
+				<con:type>http://www.w3.org/2001/XMLSchema</con:type>
+			</con:part>
+		</con:definitionCache>
+	</con:interface>
+	<con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="AuthSoapBinding" type="wsdl" bindingName="{http://xml.kamsoft.pl/ws/auth}AuthSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/E:/tmp/wsdl/Auth.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<con:settings/>
+		<con:definitionCache type="TEXT" rootPart="file:/E:/tmp/wsdl/Auth.wsdl">
+			<con:part>
+				<con:url>file:/E:/tmp/wsdl/Auth.wsdl</con:url>
+				<con:content><![CDATA[<wsdl:definitions targetNamespace="http://xml.kamsoft.pl/ws/auth" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wscommon="http://xml.kamsoft.pl/ws/common" xmlns:ns="http://wsdl.kamsoft.pl/common" xmlns:wsauth="http://xml.kamsoft.pl/ws/auth" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsbroker="http://xml.kamsoft.pl/ws/broker">
+  <wsdl:import namespace="http://wsdl.kamsoft.pl/common" location="ws_common.wsdl"></wsdl:import>
+  <wsdl:types>
+    <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xml.kamsoft.pl/ws/auth" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://schemas.xmlsoap.org/soap/encoding/">
+      <import namespace="http://xml.kamsoft.pl/ws/common" schemaLocation="ws-common.xsd"/>
+      <complexType name="LoginParams">
+        <sequence>
+          <element name="name" type="string"/>
+          <element name="password" type="string"/>
+        </sequence>
+      </complexType>
+      <complexType name="ChangePasswordParams">
+        <sequence>
+          <element name="login" type="string"/>
+          <element name="oldPassword" type="string"/>
+          <element name="newPassword" type="string"/>
+          <element name="newPasswordRepeat" type="string"/>
+        </sequence>
+      </complexType>
+      <element name="login">
+        <complexType>
+          <sequence>
+            <element name="loginRequest" type="wsauth:LoginParams"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="loginReturn" type="string"/>
+      <element name="logout" type="string"/>
+      <element name="logoutReturn" type="string"/>
+      <element name="changePassword" type="wsauth:ChangePasswordParams"/>
+      <element name="changePasswordReturn" type="string"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="changePasswordRequest">
+    <wsdl:part name="request" element="wsauth:changePassword"></wsdl:part>
+    <wsdl:part name="token" element="wscommon:authToken"></wsdl:part>
+    <wsdl:part name="session" element="wscommon:session"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="changePasswordResponse">
+    <wsdl:part name="response" element="wsauth:changePasswordReturn"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logoutRequest">
+    <wsdl:part name="session" element="wscommon:session"></wsdl:part>
+    <wsdl:part name="token" element="wscommon:authToken"></wsdl:part>
+    <wsdl:part name="request" element="wsauth:logout"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="changePasswordLogRequest">
+    <wsdl:part name="request" element="wsauth:changePassword"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logoutResponse">
+    <wsdl:part name="response" element="wsauth:logoutReturn"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginRequest">
+    <wsdl:part name="request" element="wsauth:login"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="changePasswordLogResponse">
+    <wsdl:part name="response" element="wsauth:changePasswordReturn"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="passExpiredExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:passExpiredError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part name="response" element="wsauth:loginReturn"></wsdl:part>
+    <wsdl:part name="session" element="wscommon:session"></wsdl:part>
+    <wsdl:part name="token" element="wscommon:authToken"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Auth">
+    <wsdl:operation name="login">
+      <wsdl:input name="loginRequest" message="wsauth:loginRequest"></wsdl:input>
+      <wsdl:output name="loginResponse" message="wsauth:loginResponse"></wsdl:output>
+      <wsdl:fault name="passExpiredException" message="wsauth:passExpiredExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="inputException" message="ns:inputExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="authorizationException" message="ns:authorizationExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="authTokenException" message="ns:authTokenExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="serverException" message="ns:serverExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="authenticationException" message="ns:authenticationExceptionMsg"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <wsdl:input name="logoutRequest" message="wsauth:logoutRequest"></wsdl:input>
+      <wsdl:output name="logoutResponse" message="wsauth:logoutResponse"></wsdl:output>
+      <wsdl:fault name="serverException" message="ns:serverExceptionMsg"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changePassword">
+      <wsdl:input name="changePasswordRequest" message="wsauth:changePasswordRequest"></wsdl:input>
+      <wsdl:output name="changePasswordResponse" message="wsauth:changePasswordResponse"></wsdl:output>
+      <wsdl:fault name="inputException" message="ns:inputExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="authorizationException" message="ns:authorizationExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="authTokenException" message="ns:authTokenExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="serverException" message="ns:serverExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="sessionException" message="ns:sessionExceptionMsg"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changePasswordLog">
+      <wsdl:input name="changePasswordLogRequest" message="wsauth:changePasswordLogRequest"></wsdl:input>
+      <wsdl:output name="changePasswordLogResponse" message="wsauth:changePasswordLogResponse"></wsdl:output>
+      <wsdl:fault name="inputException" message="ns:inputExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="authorizationException" message="ns:authorizationExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="serverException" message="ns:serverExceptionMsg"></wsdl:fault>
+      <wsdl:fault name="authenticationException" message="ns:authenticationExceptionMsg"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AuthSoapBinding" type="wsauth:Auth">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="login">
+      <wsdlsoap:operation soapAction="login" style="document"/>
+      <wsdl:input name="loginRequest">
+        <wsdlsoap:body parts="request" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <wsdlsoap:body parts="response" use="literal"/>
+        <wsdlsoap:header message="wsauth:loginResponse" part="session" use="literal"></wsdlsoap:header>
+        <wsdlsoap:header message="wsauth:loginResponse" part="token" use="literal"></wsdlsoap:header>
+      </wsdl:output>
+      <wsdl:fault name="passExpiredException">
+        <wsdlsoap:fault name="passExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="inputException">
+        <wsdlsoap:fault name="inputException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="authorizationException">
+        <wsdlsoap:fault name="authorizationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="authTokenException">
+        <wsdlsoap:fault name="authTokenException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="serverException">
+        <wsdlsoap:fault name="serverException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="authenticationException">
+        <wsdlsoap:fault name="authenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <wsdlsoap:operation soapAction="logout" style="document"/>
+      <wsdl:input name="logoutRequest">
+        <wsdlsoap:body parts="request" use="literal"/>
+        <wsdlsoap:header message="wsauth:logoutRequest" part="session" use="literal"></wsdlsoap:header>
+        <wsdlsoap:header message="wsauth:logoutRequest" part="token" use="literal"></wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="logoutResponse">
+        <wsdlsoap:body parts="response" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="serverException">
+        <wsdlsoap:fault name="serverException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changePassword">
+      <wsdlsoap:operation soapAction="changePassword" style="document"/>
+      <wsdl:input name="changePasswordRequest">
+        <wsdlsoap:body parts="request" use="literal"/>
+        <wsdlsoap:header message="wsauth:changePasswordRequest" part="session" use="literal"></wsdlsoap:header>
+        <wsdlsoap:header message="wsauth:changePasswordRequest" part="token" use="literal"></wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="changePasswordResponse">
+        <wsdlsoap:body parts="response" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="inputException">
+        <wsdlsoap:fault name="inputException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="authorizationException">
+        <wsdlsoap:fault name="authorizationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="authTokenException">
+        <wsdlsoap:fault name="authTokenException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="serverException">
+        <wsdlsoap:fault name="serverException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="sessionException">
+        <wsdlsoap:fault name="sessionException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changePasswordLog">
+      <wsdlsoap:operation soapAction="changePasswordLog" style="document"/>
+      <wsdl:input name="changePasswordLogRequest">
+        <wsdlsoap:body parts="request" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="changePasswordLogResponse">
+        <wsdlsoap:body parts="response" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="inputException">
+        <wsdlsoap:fault name="inputException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="authorizationException">
+        <wsdlsoap:fault name="authorizationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="serverException">
+        <wsdlsoap:fault name="serverException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="authenticationException">
+        <wsdlsoap:fault name="authenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Auth">
+    <wsdl:port name="Auth" binding="wsauth:AuthSoapBinding">
+      <wsdlsoap:address location="http://nfz.kamsoft.pl/ap-mdrl/services/Auth"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content>
+				<con:type>http://schemas.xmlsoap.org/wsdl/</con:type>
+			</con:part>
+			<con:part>
+				<con:url>file:\E:\tmp\wsdl\ws_common.wsdl</con:url>
+				<con:content><![CDATA[<wsdl:definitions targetNamespace="http://wsdl.kamsoft.pl/common" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wscommon="http://xml.kamsoft.pl/ws/common" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://wsdl.kamsoft.pl/common" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://schemas.xmlsoap.org/soap/encoding/">
+      <import namespace="http://xml.kamsoft.pl/ws/common" schemaLocation="ws-common.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="sessionExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:sessionError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="inputExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:inputError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serverExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:serverError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authTokenExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:authTokenError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authorizationExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:authorizationError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authenticationExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:authenticationError"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:serviceError"></wsdl:part>
+  </wsdl:message>
+</wsdl:definitions>]]></con:content>
+				<con:type>http://schemas.xmlsoap.org/wsdl/</con:type>
+			</con:part>
+			<con:part>
+				<con:url>file:\E:\tmp\wsdl\ws-common.xsd</con:url>
+				<con:content><![CDATA[<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xml.kamsoft.pl/ws/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wscommon="http://xml.kamsoft.pl/ws/common">
+  <xs:complexType name="AuthorizationException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AuthenticationException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ServiceException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PassExpiredException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AuthTokenException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ServerException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InputException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SessionException">
+    <xs:complexContent>
+      <xs:extension base="wscommon:BaseException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfMessage">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Message" type="string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BaseException">
+    <xs:sequence>
+      <xs:element ref="wscommon:location"/>
+      <xs:element name="faultcode" type="string"/>
+      <xs:element name="faultstring" type="string"/>
+      <xs:element name="faultactor" type="string"/>
+      <xs:element minOccurs="0" name="messages" type="wscommon:ArrayOfMessage"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceLocation">
+    <xs:sequence>
+      <xs:element name="namespace" type="string"/>
+      <xs:element name="localname" type="string"/>
+      <xs:element name="version" type="string"/>
+      <xs:element default="0" minOccurs="0" name="id" type="string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="sessionError" type="wscommon:SessionException"/>
+  <xs:element name="passExpiredError" type="wscommon:PassExpiredException"/>
+  <xs:element name="authTokenError" type="wscommon:AuthTokenException"/>
+  <xs:element name="authenticationError" type="wscommon:AuthenticationException"/>
+  <xs:element name="authorizationError" type="wscommon:AuthorizationException"/>
+  <xs:element name="inputError" type="wscommon:InputException"/>
+  <xs:element name="serviceError" type="wscommon:ServiceException"/>
+  <xs:element name="serverError" type="wscommon:ServerException"/>
+  <xs:element name="location" type="wscommon:ServiceLocation"/>
+  <xs:element name="authToken">
+    <xs:complexType>
+      <xs:attribute name="id" type="string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="session">
+    <xs:complexType>
+      <xs:attribute name="id" type="string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content>
+				<con:type>http://www.w3.org/2001/XMLSchema</con:type>
+			</con:part>
+		</con:definitionCache>
+		<con:endpoints>
+			<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+			
+		</con:endpoints>
+		<con:operation isOneWay="false" action="login" name="login" bindingOperationName="login" type="Request-Response" outputName="loginResponse" inputName="loginRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional">
+			<con:settings/>
+			<con:call name="Request 1">
+				<con:settings>
+					<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+				</con:settings>
+				<con:encoding>UTF-8</con:encoding>
+				<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+				<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>15</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST1</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+				<con:credentials>
+					<con:authType>Global HTTP Settings</con:authType>
+				</con:credentials>
+				<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+				<con:jmsPropertyConfig/>
+				<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+				<con:wsrmConfig version="1.2"/>
+			</con:call>
+		</con:operation>
+		<con:operation isOneWay="false" action="logout" name="logout" bindingOperationName="logout" type="Request-Response" outputName="logoutResponse" inputName="logoutRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional">
+			<con:settings/>
+			<con:call name="Request 1">
+				<con:settings>
+					<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+				</con:settings>
+				<con:encoding>UTF-8</con:encoding>
+				<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+				<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header>
+      <com:authToken id="vFVDgFKHFUmo+iuH7QJu"/>
+      <com:session id="519B370CED24B4F6871E2ABB2BA81790"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <auth:logout></auth:logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+				<con:credentials>
+					<con:authType>Global HTTP Settings</con:authType>
+				</con:credentials>
+				<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+				<con:jmsPropertyConfig/>
+				<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/logoutRequest"/>
+				<con:wsrmConfig version="1.2"/>
+			</con:call>
+		</con:operation>
+	</con:interface>
+	<con:testSuite name="TestSuite OW01 SWD">
+		<con:settings/>
+		<con:runType>SEQUENTIAL</con:runType>
+		<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (osoba z uprawnieniem)" searchProperties="true" id="fc1aac98-8bae-47a5-9a72-ab14056ec143">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>01</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>type</auth:name>
+						<auth:value><auth:stringValue>SWD</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>idntSwd</auth:name>
+						<auth:value><auth:stringValue>123456789</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>7AA5A140C375A87E46CC2DA50F39D196</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BSzESLqJTyFHmFMU7EncK4</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>     
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010185486</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase>
+		<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (osoba bez uprawnień)" searchProperties="true" id="6d17689b-2fce-4a56-8ed5-43f6314bcd1f">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>01</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>type</auth:name>
+						<auth:value><auth:stringValue>SWD</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>idntSwd</auth:name>
+						<auth:value><auth:stringValue>123456789</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>BF3BF3383A1E4EB1338C26B06480A18F</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BSFDZG1BsxzezdDgoe8lqh</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>    
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010150307</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (brak osoby w CWU)" searchProperties="true" id="d5a47a8f-7067-46ae-bd97-70ce11e7728a">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>01</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>type</auth:name>
+						<auth:value><auth:stringValue>SWD</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>idntSwd</auth:name>
+						<auth:value><auth:stringValue>123456789</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>760BE46C27443B860C703028C507BAF6</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BS0QpP3ubW_37obt740Y_C</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010153201</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase><con:properties/>
+	</con:testSuite>
+	<con:testSuite name="TestSuite OW01 LEK">
+		<con:settings/>
+		<con:runType>SEQUENTIAL</con:runType>
+		<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (osoba z uprawnieniem)" searchProperties="true" id="edd3b016-f0a2-4139-8003-5da336f638ec">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>01</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>type</auth:name>
+						<auth:value><auth:stringValue>LEK</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>337AE6F65CDC82E0A49297D9097C4A0D</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BSnNvchT6LVwIyNu6Z8IoU</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>     
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010185486</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase>
+		<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (osoba bez uprawnień)" searchProperties="true" id="f888ff47-a25f-416e-920e-11da513f6e2a">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>01</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>type</auth:name>
+						<auth:value><auth:stringValue>LEK</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>0F4159277326B4F5F142573E88A65549</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BSMEy1c1bXKE1Am8E59gfo</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>    
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010150307</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (brak osoby w CWU)" searchProperties="true" id="2fcb5f98-9f06-448c-86d6-e471baa30738">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>01</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>type</auth:name>
+						<auth:value><auth:stringValue>LEK</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>D313EA8A5E040945649AFBD6F6B89B08</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BSyIZVhh5jogFnC0HbAcWp</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010153201</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase><con:properties/>
+	</con:testSuite><con:testSuite name="TestSuite OW15 SWD">
+		<con:settings/>
+		<con:runType>SEQUENTIAL</con:runType>
+		<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (osoba z uprawnieniem)" searchProperties="true" id="ebcc9910-0f55-4ddf-889d-920e0dff38ee">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>15</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST1</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>AAB91C3A8475BB6F09E3BC136799F146</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BS4DZyULp_r8qfgAcQ6Pjw</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>     
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010185486</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase>
+		<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (osoba bez uprawnień)" searchProperties="true" id="e4d50de7-f90a-4d86-8618-fa169292ee07">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>15</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST1</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>18469382147ACBE20F7F44F3206CB6A9</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BSu3yWXKu+xSAtLe6htj6b</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>    
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010150307</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (brak osoby w CWU)" searchProperties="true" id="384fd6f1-2d3b-4320-95f4-88a1a3d1288c">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>15</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>TEST1</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>7971C3DF4FE7EAE23B78F2C754D5B32D</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BSygNFVSXg8HEiQWY1YSZh</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>  
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010153201</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase><con:properties/>
+	</con:testSuite><con:testSuite name="TestSuite OW15 LEK">
+		<con:settings/>
+		<con:runType>SEQUENTIAL</con:runType>
+		<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (osoba z uprawnieniem)" searchProperties="true" id="68458c2a-b596-42d0-90a5-c00d97352f4b">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>15</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>LEKARZ1</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>A0897BD168C83D9DB2B6E497AA9EC7C2</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BSK6TkEM++Hb+3zRHNCs8I</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>     
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010185486</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase>
+		<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (osoba bez uprawnień)" searchProperties="true" id="a95c4bcc-1bac-4a4c-9136-0047f671f69e">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>15</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>LEKARZ1</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>499C5E87AF0B16BC6C09BDB52A8BE72A</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BS2TYngIQHFhxXydQAxk+A</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>    
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010150307</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase (brak osoby w CWU)" searchProperties="true" id="2d2f39be-cbe9-45bb-a0b8-0a298250aadc">
+			<con:settings/>
+			<con:testStep type="request" name="login">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>AuthSoapBinding</con:interface>
+					<con:operation>login</con:operation>
+					<con:request name="login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:auth="http://xml.kamsoft.pl/ws/kaas/login_types">
+   <soapenv:Header/>
+   <soapenv:Body>
+			 <auth:login>
+				<auth:credentials>
+					<auth:item>
+						<auth:name>domain</auth:name>
+						<auth:value><auth:stringValue>15</auth:stringValue></auth:value>
+					</auth:item>
+					<auth:item>
+						<auth:name>login</auth:name>
+						<auth:value><auth:stringValue>LEKARZ1</auth:stringValue></auth:value>
+					</auth:item>
+				</auth:credentials>
+		            	<auth:password>qwerty!@#</auth:password>
+			</auth:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+							<con:username/>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/auth/Auth/loginRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="properties" name="SessionIDAuthToken">
+				<con:settings/>
+				<con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:properties>
+						<con:property>
+							<con:name>SessionID</con:name>
+							<con:value>F01521683641AA025CC3E9DD46634BC3</con:value>
+						</con:property>
+						<con:property>
+							<con:name>AuthToken</con:name>
+							<con:value>BSYAJtZSpZVvEQmXw5oByj</con:value>
+						</con:property>
+					</con:properties>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="transfer" name="SESSION">
+				<con:settings/>
+				<con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferSessionID</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:session/@id
+						</con:sourcePath>
+						<con:targetType>SessionID</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+					<con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" useXQuery="false" entitize="false" transferChildNodes="false">
+						<con:name>TransferAuthToken</con:name>
+						<con:sourceType>Response</con:sourceType>
+						<con:sourceStep>login</con:sourceStep>
+						<con:sourcePath>declare namespace ns1="http://xml.kamsoft.pl/ws/common";
+//ns1:authToken/@id
+						</con:sourcePath>
+						<con:targetType>AuthToken</con:targetType>
+						<con:targetStep>SessionIDAuthToken</con:targetStep>
+						<con:targetPath/>
+					</con:transfers>
+				</con:config>
+			</con:testStep>
+			<con:testStep type="request" name="executeService - checkCWU">
+				<con:settings/>
+				<con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<con:interface>ServiceBrokerSoapBinding</con:interface>
+					<con:operation>executeService</con:operation>
+					<con:request name="executeService - checkCWU" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="">
+						<con:settings>
+							<con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+						</con:settings>
+						<con:encoding>UTF-8</con:encoding>
+						<con:endpoint>https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker</con:endpoint>
+						<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://xml.kamsoft.pl/ws/common" xmlns:brok="http://xml.kamsoft.pl/ws/broker">
+   <soapenv:Header>
+       <com:session id="${SessionIDAuthToken#SessionID}"  xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+      <com:authToken id="${SessionIDAuthToken#AuthToken}" xmlns:ns1="http://xml.kamsoft.pl/ws/common"/>
+   </soapenv:Header>
+   <soapenv:Body>
+      <brok:executeService>
+         <com:location>
+            <com:namespace>nfz.gov.pl/ws/broker/cwu</com:namespace>
+            <com:localname>checkCWU</com:localname>
+            <com:version>1.0</com:version>
+         </com:location>
+         <brok:date>2008-09-12T09:37:36.406+01:00</brok:date>      
+         <brok:payload>   
+		<brok:textload>
+			<status_cwu_pyt>
+				<numer_pesel>01010153201</numer_pesel>
+				<system_swiad nazwa="eWUS" wersja="2.0"></system_swiad>
+			</status_cwu_pyt>
+		</brok:textload>
+        </brok:payload>    
+      </brok:executeService>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+						<con:assertion type="SOAP Response" name="SOAP Response"/>
+						<con:credentials>
+							<con:authType>Global HTTP Settings</con:authType>
+						</con:credentials>
+						<con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+						<con:jmsPropertyConfig/>
+						<con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xml.kamsoft.pl/ws/broker/ServiceBroker/executeServiceRequest"/>
+						<con:wsrmConfig version="1.2"/>
+					</con:request>
+				</con:config>
+			</con:testStep>
+			<con:properties/>
+		</con:testCase><con:properties/>
+	</con:testSuite><con:properties/>
+	<con:wssContainer/>
+	<con:sensitiveInformation/>
+</con:soapui-project>
