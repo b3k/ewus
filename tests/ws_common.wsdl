@@ -1,0 +1,35 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wscommon="http://xml.kamsoft.pl/ws/common" targetNamespace="http://wsdl.kamsoft.pl/common">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://schemas.xmlsoap.org/soap/encoding/" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://wsdl.kamsoft.pl/common">
+			<import namespace="http://xml.kamsoft.pl/ws/common" schemaLocation="ws-common.xsd" />
+		</schema>
+  </wsdl:types>
+  <wsdl:message name="authTokenExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:authTokenError">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authenticationExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:authenticationError">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serverExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:serverError">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authorizationExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:authorizationError">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="inputExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:inputError">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sessionExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:sessionError">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceExceptionMsg">
+    <wsdl:part name="fault" element="wscommon:serviceError">
+    </wsdl:part>
+  </wsdl:message>
+</wsdl:definitions>

@@ -1,0 +1,136 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://www.w3.org/2005/05/xmlmime" xmlns:ns="http://wsdl.kamsoft.pl/common" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wscommon="http://xml.kamsoft.pl/ws/common" xmlns:wsbroker="http://xml.kamsoft.pl/ws/broker" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" targetNamespace="http://xml.kamsoft.pl/ws/broker">
+  <wsdl:import namespace="http://wsdl.kamsoft.pl/common" location="https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker?wsdl=ws_common.wsdl">
+    </wsdl:import>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:ns1="http://schemas.xmlsoap.org/soap/encoding/" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xml.kamsoft.pl/ws/broker">
+			<import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker?xsd=xmime.xsd" />
+			<import namespace="http://xml.kamsoft.pl/ws/common" schemaLocation="https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker?xsd=ws-common.xsd" />
+			<complexType name="ServiceResponse">
+				<complexContent>
+					<extension base="wsbroker:Service" />
+				</complexContent>
+			</complexType>
+			<complexType name="ServiceRequest">
+				<complexContent>
+					<extension base="wsbroker:Service" />
+				</complexContent>
+			</complexType>
+			<complexType name="Service">
+				<sequence>
+					<element ref="wscommon:location" />
+					<element name="date" type="dateTime" />
+					<element minOccurs="0" name="params" type="wsbroker:ArrayOfParam" />
+					<element name="payload" type="wsbroker:Payload" />
+				</sequence>
+			</complexType>
+			<complexType name="Payload">
+				<sequence>
+					<element minOccurs="0" name="textload">
+						<complexType>
+							<sequence>
+								<any />
+							</sequence>
+						</complexType>
+					</element>
+					<element minOccurs="0" name="streamload">
+						<complexType>
+							<sequence>
+								<element name="stream" type="xmime:base64Binary" />
+							</sequence>
+							<attribute name="name" type="string" use="required" />
+						</complexType>
+					</element>
+				</sequence>
+			</complexType>
+			<complexType name="Param">
+				<sequence>
+					<element name="name" type="xsd:string" />
+					<element name="value" type="xsd:string" />
+				</sequence>
+			</complexType>
+			<complexType name="ArrayOfParam">
+				<sequence>
+					<element maxOccurs="unbounded" name="item" type="wsbroker:Param" />
+				</sequence>
+			</complexType>
+			<element name="executeService" type="wsbroker:ServiceRequest" />
+			<element name="executeServiceReturn" type="wsbroker:ServiceResponse" />
+		</schema>
+  </wsdl:types>
+  <wsdl:message name="executeServiceResponseMsg">
+    <wsdl:part name="response" element="wsbroker:executeServiceReturn">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="executeServiceRequestMsg">
+    <wsdl:part name="request" element="wsbroker:executeService">
+    </wsdl:part>
+    <wsdl:part name="token" element="wscommon:authToken">
+    </wsdl:part>
+    <wsdl:part name="session" element="wscommon:session">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ServiceBroker">
+    <wsdl:operation name="executeService">
+      <wsdl:input name="executeServiceRequest" message="wsbroker:executeServiceRequestMsg">
+    </wsdl:input>
+      <wsdl:output name="executeServiceResponse" message="wsbroker:executeServiceResponseMsg">
+    </wsdl:output>
+      <wsdl:fault name="serviceException" message="ns:serviceExceptionMsg">
+    </wsdl:fault>
+      <wsdl:fault name="sessionException" message="ns:sessionExceptionMsg">
+    </wsdl:fault>
+      <wsdl:fault name="authTokenException" message="ns:authTokenExceptionMsg">
+    </wsdl:fault>
+      <wsdl:fault name="inputException" message="ns:inputExceptionMsg">
+    </wsdl:fault>
+      <wsdl:fault name="authenticationException" message="ns:authenticationExceptionMsg">
+    </wsdl:fault>
+      <wsdl:fault name="serverException" message="ns:serverExceptionMsg">
+    </wsdl:fault>
+      <wsdl:fault name="authorizationException" message="ns:authorizationExceptionMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceBrokerSoapBinding" type="wsbroker:ServiceBroker">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="executeService">
+      <wsdlsoap:operation soapAction="executeService" style="document" />
+      <wsdl:input name="executeServiceRequest">
+        <wsdlsoap:body parts="request" use="literal" />
+        <wsdlsoap:header message="wsbroker:executeServiceRequestMsg" part="session" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="wsbroker:executeServiceRequestMsg" part="token" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="executeServiceResponse">
+        <wsdlsoap:body parts="response" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="serviceException">
+        <wsdlsoap:fault name="serviceException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="sessionException">
+        <wsdlsoap:fault name="sessionException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="authTokenException">
+        <wsdlsoap:fault name="authTokenException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="inputException">
+        <wsdlsoap:fault name="inputException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="authenticationException">
+        <wsdlsoap:fault name="authenticationException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="serverException">
+        <wsdlsoap:fault name="serverException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="authorizationException">
+        <wsdlsoap:fault name="authorizationException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServiceBroker">
+    <wsdl:port name="ServiceBroker" binding="wsbroker:ServiceBrokerSoapBinding">
+      <wsdlsoap:address location="https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker" /><!-- https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker -->
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

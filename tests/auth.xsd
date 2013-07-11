@@ -1,0 +1,83 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wscommon="http://xml.kamsoft.pl/ws/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xml.kamsoft.pl/ws/common">
+<complexType name="AuthorizationException">
+<complexContent>
+<extension base="wscommon:BaseException"/>
+</complexContent>
+</complexType>
+<complexType name="AuthenticationException">
+<complexContent>
+<extension base="wscommon:BaseException"/>
+</complexContent>
+</complexType>
+<complexType name="ServiceException">
+<complexContent>
+<extension base="wscommon:BaseException"/>
+</complexContent>
+</complexType>
+<complexType name="PassExpiredException">
+<complexContent>
+<extension base="wscommon:BaseException"/>
+</complexContent>
+</complexType>
+<complexType name="AuthTokenException">
+<complexContent>
+<extension base="wscommon:BaseException"/>
+</complexContent>
+</complexType>
+<complexType name="ServerException">
+<complexContent>
+<extension base="wscommon:BaseException"/>
+</complexContent>
+</complexType>
+<complexType name="InputException">
+<complexContent>
+<extension base="wscommon:BaseException"/>
+</complexContent>
+</complexType>
+<complexType name="SessionException">
+<complexContent>
+<extension base="wscommon:BaseException"/>
+</complexContent>
+</complexType>
+<complexType name="ArrayOfMessage">
+<sequence>
+<element maxOccurs="unbounded" name="Message" type="string"/>
+</sequence>
+</complexType>
+<complexType name="BaseException">
+<sequence>
+<element ref="wscommon:location"/>
+<element name="faultcode" type="string"/>
+<element name="faultstring" type="string"/>
+<element name="faultactor" type="string"/>
+<element minOccurs="0" name="messages" type="wscommon:ArrayOfMessage"/>
+</sequence>
+</complexType>
+<complexType name="ServiceLocation">
+<sequence>
+<element name="namespace" type="string"/>
+<element name="localname" type="string"/>
+<element name="version" type="string"/>
+<element default="0" minOccurs="0" name="id" type="string"/>
+</sequence>
+</complexType>
+<element name="sessionError" type="wscommon:SessionException"/>
+<element name="passExpiredError" type="wscommon:PassExpiredException"/>
+<element name="authTokenError" type="wscommon:AuthTokenException"/>
+<element name="authenticationError" type="wscommon:AuthenticationException"/>
+<element name="authorizationError" type="wscommon:AuthorizationException"/>
+<element name="inputError" type="wscommon:InputException"/>
+<element name="serviceError" type="wscommon:ServiceException"/>
+<element name="serverError" type="wscommon:ServerException"/>
+<element name="location" type="wscommon:ServiceLocation"/>
+<element name="authToken">
+<complexType>
+<attribute name="id" type="string" use="required"/>
+</complexType>
+</element>
+<element name="session">
+<complexType>
+<attribute name="id" type="string" use="required"/>
+</complexType>
+</element>
+</schema>

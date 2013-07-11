@@ -1,0 +1,89 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://xml.kamsoft.pl/ws/kaas/login_types" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xml.kamsoft.pl/ws/kaas/login_types">
+<xs:complexType name="loginRequest">
+<xs:sequence>
+<xs:element name="credentials" type="loginParams"/>
+<xs:element name="password" type="xs:string">
+<xs:annotation>
+<xs:documentation>Haslo operatora</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="loginParam">
+<xs:annotation>
+<xs:documentation>Pojedyczny parametr logowania</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="name" type="xs:string">
+<xs:annotation>
+<xs:documentation>Nazwa parametru logowania</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="value" type="paramValue">
+<xs:annotation>
+<xs:documentation>Wartosc parametru logowania - moze przyjmowac dwa typu: String lub any (dla wartosci zlozonych)</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="loginParams">
+<xs:annotation>
+<xs:documentation>Mozliwe sa parametry o nastepujacych nazwach:
+1) domain - domena logowania - przyjmuje dwucyfrowy kod OW
+2) idntSwd - kod swiadczeniodawcy
+3) login - login operatora
+4) type - typ operatora (mozliwe wartosci: SWD, LEK)
+
+Powyzsze parametry tworza nastepujace warianty umozliwiajace autentykacje:
+1) domain, login - operator w systemie KS-Katowice
+2) domain, type=LEK, login -  operartor typu lekarz w systemie KS-Gliwice
+3) domain, idntSwd, login, type=SWD - operator typu swiadczeniodawca w systemie KS-Gliwice</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="item" type="loginParam"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="changePasswordParams">
+<xs:sequence>
+<xs:element name="credentials" type="loginParams">
+<xs:annotation>
+<xs:documentation>Zbior identyfikatorow operatora</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="oldPassword" type="xs:string">
+<xs:annotation>
+<xs:documentation>Stare haslo</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="newPassword" type="xs:string">
+<xs:annotation>
+<xs:documentation>Nowe haslo</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="newPasswordRepeat" type="xs:string">
+<xs:annotation>
+<xs:documentation>Nowe haslo - powtorzenie</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="login" type="loginRequest"/>
+<xs:element name="loginReturn" type="xs:string"/>
+<xs:element name="logout" type="xs:string"/>
+<xs:element name="logoutReturn" type="xs:string"/>
+<xs:element name="changePassword" type="changePasswordParams"/>
+<xs:element name="changePasswordLog" type="changePasswordParams"/>
+<xs:element name="changePasswordReturn" type="xs:string"/>
+<xs:complexType name="paramValue">
+<xs:choice>
+<xs:element name="stringValue" type="xs:string"/>
+<xs:element name="anyValue">
+<xs:complexType>
+<xs:sequence>
+<xs:any/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:choice>
+</xs:complexType>
+</xs:schema>

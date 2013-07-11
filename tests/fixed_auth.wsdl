@@ -1,0 +1,220 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns="http://wsdl.kamsoft.pl/common" xmlns:wsauth="http://xml.kamsoft.pl/ws/auth" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wscommon="http://xml.kamsoft.pl/ws/common" xmlns:wsbroker="http://xml.kamsoft.pl/ws/broker" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd1="http://xml.kamsoft.pl/ws/kaas/login_types" targetNamespace="http://xml.kamsoft.pl/ws/auth">
+    <wsdl:import namespace="http://wsdl.kamsoft.pl/common" location="ws_common.wsdl">
+    </wsdl:import>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://xml.kamsoft.pl/ws/auth">
+            <xsd:import namespace="http://xml.kamsoft.pl/ws/kaas/login_types" schemaLocation="login_types.xsd">
+            </xsd:import>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="loginRequest">
+        <wsdl:part name="request" element="xsd1:login">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="loginResponse">
+        <wsdl:part name="response" element="xsd1:loginReturn">
+        </wsdl:part>
+        <wsdl:part name="session" element="wscommon:session">
+        </wsdl:part>
+        <wsdl:part name="token" element="wscommon:authToken">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="changePasswordLogRequest">
+        <wsdl:part name="request" element="xsd1:changePasswordLog">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="changePasswordResponse">
+        <wsdl:part name="response" element="xsd1:changePasswordReturn">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="passExpiredExceptionMsg">
+        <wsdl:part name="fault" element="wscommon:passExpiredError">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="logoutResponse">
+        <wsdl:part name="response" element="xsd1:logoutReturn">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="logoutRequest">
+        <wsdl:part name="session" element="wscommon:session">
+        </wsdl:part>
+        <wsdl:part name="token" element="wscommon:authToken">
+        </wsdl:part>
+        <wsdl:part name="request" element="xsd1:logout">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="changePasswordRequest">
+        <wsdl:part name="request" element="xsd1:changePassword">
+        </wsdl:part>
+        <wsdl:part name="token" element="wscommon:authToken">
+        </wsdl:part>
+        <wsdl:part name="session" element="wscommon:session">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="changePasswordLogResponse">
+        <wsdl:part name="response" element="xsd1:changePasswordReturn">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="Auth">
+        <wsdl:operation name="login">
+            <wsdl:input name="loginRequest" message="wsauth:loginRequest">
+            </wsdl:input>
+            <wsdl:output name="loginResponse" message="wsauth:loginResponse">
+            </wsdl:output>
+            <wsdl:fault name="authTokenException" message="ns:authTokenExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="passExpiredException" message="wsauth:passExpiredExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="inputException" message="ns:inputExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="authenticationException" message="ns:authenticationExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="serverException" message="ns:serverExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="authorizationException" message="ns:authorizationExceptionMsg">
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="logout">
+            <wsdl:input name="logoutRequest" message="wsauth:logoutRequest">
+            </wsdl:input>
+            <wsdl:output name="logoutResponse" message="wsauth:logoutResponse">
+            </wsdl:output>
+            <wsdl:fault name="serverException" message="ns:serverExceptionMsg">
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="changePassword">
+            <wsdl:input name="changePasswordRequest" message="wsauth:changePasswordRequest">
+            </wsdl:input>
+            <wsdl:output name="changePasswordResponse" message="wsauth:changePasswordResponse">
+            </wsdl:output>
+            <wsdl:fault name="sessionException" message="ns:sessionExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="authTokenException" message="ns:authTokenExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="inputException" message="ns:inputExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="serverException" message="ns:serverExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="authorizationException" message="ns:authorizationExceptionMsg">
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="changePasswordLog">
+            <wsdl:input name="changePasswordLogRequest" message="wsauth:changePasswordLogRequest">
+            </wsdl:input>
+            <wsdl:output name="changePasswordLogResponse" message="wsauth:changePasswordLogResponse">
+            </wsdl:output>
+            <wsdl:fault name="inputException" message="ns:inputExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="authenticationException" message="ns:authenticationExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="serverException" message="ns:serverExceptionMsg">
+            </wsdl:fault>
+            <wsdl:fault name="authorizationException" message="ns:authorizationExceptionMsg">
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AuthSoapBinding" type="wsauth:Auth">
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="login">
+            <wsdlsoap:operation soapAction="login" style="document" />
+            <wsdl:input name="loginRequest">
+                <wsdlsoap:body parts="request" use="literal" />
+            </wsdl:input>
+            <wsdl:output name="loginResponse">
+                <wsdlsoap:body parts="response" use="literal" />
+                <wsdlsoap:header message="wsauth:loginResponse" part="session" use="literal">
+                </wsdlsoap:header>
+                <wsdlsoap:header message="wsauth:loginResponse" part="token" use="literal">
+                </wsdlsoap:header>
+            </wsdl:output>
+            <wsdl:fault name="authTokenException">
+                <wsdlsoap:fault name="authTokenException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="passExpiredException">
+                <wsdlsoap:fault name="passExpiredException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="inputException">
+                <wsdlsoap:fault name="inputException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="authenticationException">
+                <wsdlsoap:fault name="authenticationException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="serverException">
+                <wsdlsoap:fault name="serverException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="authorizationException">
+                <wsdlsoap:fault name="authorizationException" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="logout">
+            <wsdlsoap:operation soapAction="logout" style="document" />
+            <wsdl:input name="logoutRequest">
+                <wsdlsoap:body parts="request" use="literal" />
+                <wsdlsoap:header message="wsauth:logoutRequest" part="session" use="literal">
+                </wsdlsoap:header>
+                <wsdlsoap:header message="wsauth:logoutRequest" part="token" use="literal">
+                </wsdlsoap:header>
+            </wsdl:input>
+            <wsdl:output name="logoutResponse">
+                <wsdlsoap:body parts="response" use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="serverException">
+                <wsdlsoap:fault name="serverException" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="changePassword">
+            <wsdlsoap:operation soapAction="changePassword" style="document" />
+            <wsdl:input name="changePasswordRequest">
+                <wsdlsoap:body parts="request" use="literal" />
+                <wsdlsoap:header message="wsauth:changePasswordRequest" part="session" use="literal">
+                </wsdlsoap:header>
+                <wsdlsoap:header message="wsauth:changePasswordRequest" part="token" use="literal">
+                </wsdlsoap:header>
+            </wsdl:input>
+            <wsdl:output name="changePasswordResponse">
+                <wsdlsoap:body parts="response" use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="sessionException">
+                <wsdlsoap:fault name="sessionException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="authTokenException">
+                <wsdlsoap:fault name="authTokenException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="inputException">
+                <wsdlsoap:fault name="inputException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="serverException">
+                <wsdlsoap:fault name="serverException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="authorizationException">
+                <wsdlsoap:fault name="authorizationException" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="changePasswordLog">
+            <wsdlsoap:operation soapAction="changePasswordLog" style="document" />
+            <wsdl:input name="changePasswordLogRequest">
+                <wsdlsoap:body parts="request" use="literal" />
+            </wsdl:input>
+            <wsdl:output name="changePasswordLogResponse">
+                <wsdlsoap:body parts="response" use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="inputException">
+                <wsdlsoap:fault name="inputException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="authenticationException">
+                <wsdlsoap:fault name="authenticationException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="serverException">
+                <wsdlsoap:fault name="serverException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="authorizationException">
+                <wsdlsoap:fault name="authorizationException" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Auth">
+        <wsdl:port name="Auth" binding="wsauth:AuthSoapBinding">
+            <wsdlsoap:address location="https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
