@@ -26,99 +26,123 @@ use Ewus\BrokerResponse\CheckCwuBrokerResponse;
  */
 class Ewus {
 
+    /**
+     * Production Auth WSDL (working)
+     */
     const WSDL_PROD_AUTH = "https://ewus.nfz.gov.pl/ws-broker-server-ewus/services/Auth?wsdl";
+    
+    /**
+     * Production Broker WSDL (working)
+     */
     const WSDL_PROD_BROK = "https://ewus.nfz.gov.pl/ws-broker-server-ewus/services/ServiceBroker?wsdl";
-    const WSDL_TEST_AUTH = "tests/fixed_auth.wsdl"; //https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth?wsdl
-    const WSDL_TEST_BROK = "tests/fixed_broker.wsdl";
-
-    //"https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker?wsdl";
+    
+    /**
+     * Currently this WSDL is broken (sic) use "tests/fixed_auth.wsdl" instead for testing.
+     */
+    const WSDL_TEST_AUTH = "https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/Auth?wsdl";
+    
+    /**
+     * Currently this WSDL is broken (sic) use "tests/fixed_broker.wsdl" instead for testing.
+     */
+    const WSDL_TEST_BROK = "https://ewus.nfz.gov.pl/ws-broker-server-ewus-auth-test/services/ServiceBroker?wsdl";
 
     /**
+     * Is prodcution env ?
      *
      * @var boolean
      */
     protected $is_production = FALSE;
 
     /**
+     * Domain 
      *
      * @var integer
      */
     protected $domain;
 
     /**
+     * Username for authentication
      *
      * @var string
      */
     protected $username;
 
     /**
-     *
+     * Password for authentication
+     * 
      * @var string
      */
     protected $password;
 
     /**
+     * Application name (something like USER_AGENT) for broker service
      *
      * @var string
      */
     protected $system_name;
 
     /**
+     * Application version for broker service
      *
      * @var string
      */
     protected $system_version;
 
     /**
-     *
+     * Authenticate response code
+     * 
      * @var integer
      */
-    private $response_code;
+    protected $auth_response_code;
 
     /**
-     *
+     * Authenticate response msg
+     * 
      * @var string
      */
-    private $response_msg;
+    protected $auth_response_msg;
 
     /**
      * Session ID from login request
      *
      * @var string
      */
-    private $auth_session_id;
+    protected $auth_session_id;
 
     /**
      * Is session registered?
      * 
      * @var string
      */
-    private $logged = FALSE;
+    protected $logged = FALSE;
 
     /**
      * Holds AuthToken from login request
      * 
      * @var string
      */
-    private $auth_token;
+    protected $auth_token;
 
     /**
-     *
+     * Soap client object for broker services
+     * 
      * @var EwusSoapClient
      */
-    private $broker_client;
+    protected $broker_client;
 
     /**
-     *
-     * @var EwusSoapClient
+     * Soap client object for authentication
+     * 
+     * @var EwusAuthSoapClient
      */
-    private $auth_client;
+    protected $auth_client;
 
     /**
-     *
+     * Initalization options for SoapClient object
+     * 
      * @var array 
      */
-    private $soap_client_options;
+    protected $soap_client_options;
 
     /**
      * 
@@ -137,10 +161,11 @@ class Ewus {
         $this->is_production = (bool) $params['is_production'];
     }
 
+    /**
+     *  Destructor created to make logout from session.
+     */
     public function __destruct() {
-        if ($this->logged) {
-            $this->logout();
-        }
+        $this->logout();
     }
 
     /**
@@ -157,8 +182,8 @@ class Ewus {
         $response = $client->authLogin($params);
         $this->auth_session_id = $response['session_id'];
         $this->auth_token = $response['auth_token'];
-        $this->response_code = $response['response_code'];
-        $this->response_msg = $response['response_msg'];
+        $this->auth_response_code = $response['response_code'];
+        $this->auth_response_msg = $response['response_msg'];
 
         $this->logged = TRUE;
 
@@ -174,7 +199,7 @@ class Ewus {
         if (!$this->logged) {
             return TRUE;
         }
-        $this->getAuthClient()->authLogout(array('session_id' => $this->auth_session_id, 'auth_token' => $this->auth_token));
+        return $this->getAuthClient()->authLogout(array('session_id' => $this->auth_session_id, 'auth_token' => $this->auth_token));
     }
 
     /**
@@ -217,6 +242,24 @@ class Ewus {
     }
 
     /**
+     * Response auth response code
+     * 
+     * @return string
+     */
+    public function getAuthResponseCode() {
+        return $this->auth_response_code;
+    }
+
+    /**
+     * Returns auth response msg
+     * 
+     * @return string
+     */
+    public function getAuthResponseMsg() {
+        return $this->auth_response_msg;
+    }
+
+    /**
      * Returns Ewus SoapClient with Auth WSDL
      * 
      * @return EwusSoapClient
@@ -241,10 +284,3 @@ class Ewus {
     }
 
 }
-
-//require_once 'vendor/autoload.php';
-//$c = new Ewus(array('is_production' => FALSE, 'username' => 'TEST1', 'domain' => 15));
-//$c->authenticate();
-//$res = $c->checkPesel('86042510356');
-//var_dump($res->getPatientExpiryDate());
-//var_dump($res->getDate());

@@ -24,19 +24,19 @@ class EwusBrokerServiceSoapClient extends EwusSoapClient {
     const BROKER_SERVICE_LOCALNAME_CHECKCWU = 'checkCWU';
 
     /**
+     * Returns WSDL service location from WSDL
      * 
      * @return string
      */
     public function getBrokerServiceAddress() {
         $xml = simplexml_load_file($this->wsdl);
         $address = $xml->xpath('//wsdl:definitions/wsdl:service/wsdl:port/wsdlsoap:address');
-        $address = $address[0]->attributes()->location;
-        return (string) $address;
+        return (string) $address[0]->attributes()->location;
     }
 
     /**
      * Sends raw XML into ServiceBroker to get info
-     * about given PESEL
+     * about given PESEL.
      * 
      * We solve this request in 'ugly-way' coz 
      * PHP SOAP Lib can't parse eWUS Broker WSDL properly (node "<any />").

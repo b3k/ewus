@@ -20,7 +20,10 @@ use Ewus\Exception\EwusUnexpectedResponseException;
  * @author Bartosz Pietrzak <b3k@b3k.pl>
  */
 class EwusAuthSoapClient extends EwusSoapClient {
-
+    
+    /**
+     * Regexp for getting auth response code
+     */
     const AUTH_RESPONSE_REGEXP = '|^\[([0-9]{3})\] (.*)$|si';
 
     /**
@@ -40,7 +43,6 @@ class EwusAuthSoapClient extends EwusSoapClient {
                             array('name' => 'login', 'value' => array('stringValue' => $params['username']))
                         ),
                         'password' => $params['password'])), null, null, $header);
-
         if (preg_match(self::AUTH_RESPONSE_REGEXP, $response, $response_msg)) {
             $return['response_code'] = $response_msg[1];
             $return['response_msg'] = $response_msg[2];

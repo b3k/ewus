@@ -37,6 +37,10 @@ class CheckCwuBrokerResponse {
     private $signature_reference_digest_value;
 
     /**
+     * Creates CheckCwuBrokerResponse object from array
+     * 
+     * While parsing each element from array, they can manipulate some data
+     * that are defined in $transform array as anonymous functions.
      * 
      * @param array $data
      */
@@ -47,7 +51,7 @@ class CheckCwuBrokerResponse {
         // put lambda-style function for given key if you want more transforms on given value
         $transform = array(
             'date' => function($in) {
-                return is_string($in) ? \DateTime::createFromFormat(\DateTime::W3C, $in) : $in;
+                return is_string($in) ? \DateTime::createFromFormat('Y-m-d\TH:i:s\.uP', $in) : $in;
             },
             'patient_expiry_date' => function($in) {
                 return is_string($in) ? \DateTime::createFromFormat('Y-m-d', $in) : $in;

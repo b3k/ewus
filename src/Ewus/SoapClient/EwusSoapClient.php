@@ -33,12 +33,12 @@ abstract class EwusSoapClient extends \SoapClient {
     protected $wsdl;
 
     /**
+     * Creates Ewus Soap Client
      * 
-     * @param type $wsdl
-     * @param type $options
+     * @param string $wsdl
+     * @param array $options
      */
     public function __construct($wsdl, $options = array()) {
-        echo $wsdl.PHP_EOL;
         $this->wsdl = $wsdl;
         $this->options = $options;
         parent::__construct($wsdl, $options);
